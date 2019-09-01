@@ -27,6 +27,7 @@ static const uint16_t fish1_palette[] = {
 static FishAnimation fish1_animation = {
   .frame_start_index = 7,
   .frame_count = 6,
+  .video_frames_per_sprite_frame = 10,
 };
 
 const FishType fish1_type = {
@@ -35,7 +36,6 @@ const FishType fish1_type = {
   .num_frames = arrlen(fish1_frames),
   .frames = (uint8_t*)fish1_frames,
   .anim_idle = &fish1_animation,
-  .video_frames_per_sprite_frame = 10,
   .palette = fish1_palette,
   .palette_length = arrlen(fish1_palette),
 };

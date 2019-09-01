@@ -10,6 +10,7 @@
 typedef struct FishAnimation {
   uint8_t frame_start_index;
   uint8_t frame_count;
+  uint8_t video_frames_per_sprite_frame;
 } FishAnimation;
 
 typedef struct FishType {
@@ -18,7 +19,6 @@ typedef struct FishType {
   uint8_t num_frames;
   const uint8_t* frames;
   const FishAnimation* anim_idle;
-  uint8_t video_frames_per_sprite_frame;
   const uint16_t* palette;
   uint8_t palette_length;
 } FishType;
@@ -52,13 +52,17 @@ inline void fish_update_pos(FishState* fish) {
       (fish->vely < 0 && fish->y <= 0)) {
     fish->vely = -fish->vely;
   }
+  if (fish->velx != 0) {
+    fish->facing_direction = fish->velx < 0;
+  }
   fish->x += fish->velx * dt;
   fish->y += fish->vely * dt;
 }
 
 inline void fish_update_frame(FishState* fish) {
   fish->current_frame_progress =
-    (fish->current_frame_progress + 1) % fish->type->video_frames_per_sprite_frame;
+    (fish->current_frame_progress + 1) %
+      fish->current_animation->video_frames_per_sprite_frame;
   if (fish->current_frame_progress == 0) {
     fish->current_frame =
       (fish->current_frame + 1) % fish->current_animation->frame_count;

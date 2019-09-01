@@ -66,7 +66,9 @@ void draw() {
       int16_t out_y = fish->y + y;
       if (out_y < 0 || out_y >= HEIGHT) continue;
       for (int16_t x = 0; x < fish_width; x++) {
-        int16_t out_x = fish->x + x;
+        int16_t out_x = fish->facing_direction == 0 ?
+          fish->x + x :
+          fish->x + (fish->type->width - x);
         if (out_x < 0 || out_x >= WIDTH) continue;
 
         uint8_t frame_index =
